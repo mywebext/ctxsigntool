@@ -1,0 +1,137 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Core -->
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- DOTNET TOOL CONFIG -->
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>ctxsigntool</ToolCommandName>
+
+    <!-- NuGet Identity -->
+    <PackageId>ctxsigntool</PackageId>
+    <Version>1.1.2</Version>
+    <PackageVersion>1.1.2</PackageVersion>
+    
+    <!-- Make CLI version always match NuGet version -->
+    <InformationalVersion>$(Version)</InformationalVersion>
+
+    <Authors>Kenneth Poston</Authors>
+    <Company>Mywebext Services LLC</Company>
+
+    <!-- Public documentation -->
+    <PackageProjectUrl>https://www.mywebext.com/ctxsign</PackageProjectUrl>
+
+    <!-- SVN repository (licensed access) -->
+    <RepositoryUrl>https://ctxsign.mywebext.com/</RepositoryUrl>
+    <RepositoryType>svn</RepositoryType>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageIcon>icon.png</PackageIcon>
+
+    <Description>dotnet tooling based on ctxsignlib, a cross-platform CMS/PKCS#7 detached project signing tool. Provides single file and file hash manifest signing and verification utilities with certificate generation and localized help support.</Description>
+
+    <PackageTags>ctxsign;ctxsignlib;ctxsigntool;cmssign;cms;cert;certificate;verification;pkcs7;signature;detached;integrity;security;manifest;spoof;hijack;hack;worm;</PackageTags>
+
+    <!-- Tool-friendly defaults -->
+    <SelfContained>false</SelfContained>
+    <PublishSingleFile>false</PublishSingleFile>
+    <PublishTrimmed>false</PublishTrimmed>
+
+    <!-- Clean Release Builds -->
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+
+    <!-- README support -->
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <!-- Deterministic -->
+    <Deterministic>true</Deterministic>
+    <StartupObject>CtxSignTool.Program</StartupObject>
+    <AssemblyTitle>CtxSign Tool</AssemblyTitle>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>CtxSign Tool</Title>
+    <Copyright>2026 Kenneth Poston, Mywebext Services LLC</Copyright>
+    <PackageReleaseNotes>This release refactors ctxsigntool structure while preserving ctxsignlib 1.1.0 behavioral truth, adds localized help scaffolding, and supports composed manifest flows through --sign --manifest and --verify --manifest.</PackageReleaseNotes>
+    <ApplicationIcon>ctxsign48.ico</ApplicationIcon>
+    <RootNamespace>CtxSignTool</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="_toolfeed\**" />
+    <EmbeddedResource Remove="_toolfeed\**" />
+    <None Remove="_toolfeed\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="dotnet-tools.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ctxsign48.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CustomToolNamespace></CustomToolNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CustomToolNamespace></CustomToolNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ctxsignlib" Version="1.1.*" />
+  </ItemGroup>
+
+  <!-- Pack README -->
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="icon.png">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <!-- Localization files -->
+  <ItemGroup>
+    <None Update="Localization\Lang\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+      <PackagePath>tools\$(TargetFramework)\any\Localization\Lang\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <!-- Global static import for CtxSignlib.Functions -->
+  <ItemGroup>
+    <Using Include="CtxSignlib.Functions">
+      <Static>True</Static>
+    </Using>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="Contracts\" />
+    <Folder Include="Parsing\" />
+    <Folder Include="Routing\Help\" />
+    <Folder Include="Routing\Manifest\" />
+    <Folder Include="Routing\Sign\" />
+    <Folder Include="Services\" />
+    <Folder Include="Help\" />
+    <Folder Include="Localization\" />
+    <Folder Include="Localization\Lang\" />
+    <Folder Include="Certificates\" />
+    <Folder Include="Manifest\" />
+    <Folder Include="Output\" />
+    <Folder Include="Models\" />
+    <Folder Include="Compatibility\" />
+  </ItemGroup>
+
+</Project>
